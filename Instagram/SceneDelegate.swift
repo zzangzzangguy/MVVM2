@@ -13,11 +13,34 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
-    }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        window = UIWindow(windowScene: windowScene) // SceneDelegate의 프로퍼티에 설정해줌
+        var user = User(username: "kill bong", followersCount: 100, followingCount: 200, postCount: 50)
+        user.FeedDataAr = [FeedData(FeedImage: UIImage(named: "문상훈")!),
+                           FeedData(FeedImage: UIImage(named: "문상훈2")!),
+                           FeedData(FeedImage: UIImage(named: "문상훈3")!)
+        ]
+        
+
+        let mainViewController = ProfileViewController(user: user)
+        mainViewController.tabBarItem = UITabBarItem(
+            title: "프로필",
+            image: UIImage(systemName: "person.fill"),
+            selectedImage: nil
+            )
+        
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = [mainViewController]
+        let tabBar = tabBarController.tabBar
+           tabBar.backgroundColor = UIColor.clear
+           tabBar.barTintColor = UIColor.white
+           tabBar.tintColor = UIColor.orange
+           tabBar.unselectedItemTintColor = UIColor.lightGray
+           
+           window?.rootViewController = tabBarController
+           window?.makeKeyAndVisible()
+       }
+    
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
